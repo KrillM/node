@@ -1,10 +1,3 @@
-console.log(1);
-setTimeout(()=>{
-    console.log(2);
-},2000);
-console.log(3);
-
-// 다음 코드를 해결하기
 function goMart(){
     console.log("어떤 맥주를 살지 고민한다.");
 }
@@ -12,11 +5,12 @@ function goMart(){
 let beer;
 let won;
 
-function pickBeer(){
+function pickBeer(callback){
     setTimeout(function(){
         console.log("아싸 치맥이당!");
         beer="칼스버그";
         won=4500;
+        callback(beer, won);
     }, 3000);
 }
 
@@ -25,5 +19,5 @@ function pay(beer, won){
 }
 
 goMart();
-pickBeer();
-pay(beer, won);
+pickBeer(pay);
+// pay(beer, won);
