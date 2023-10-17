@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <h1>로그인</h1>
+    <!-- form 전송은 클라이언트가 서버로 데이터를 보내는 방법 중 하나이다. -->
+    <!-- action: 요청을 보낼 주소(내 서버에 보낸다는 가정 하에 도메인을 뺀 나머지 주소) -->
+    <!-- ex. localhost:8000/get 으로 전송하기 위해서는 <form action="/get" method="get">로 작성한다. -->
+    <!-- method: 어떤 방식의 요청을 사용할 지 (get or post) -->
+    <!-- url에 전송되는 데이터가 노출된다는 치명적인 보안 문제가 있다. -->
+    <form action="/get" method="get" name="login" target="_blank">
+        <input type="text" name="id"/>
+        <input type="password" name="pw"/>
+        <!-- button type submit인 경우, 버튼을 감싸고 있는 form 태그의 정보에 맞게 폼을 제출한다. -->
+        <button type="submit">제출</button>
+    </form>
+    <script>
+        console.dir(document.forms("login"));
+    </script>
+
+    <h1>회원가입</h1>
+    <form action="/get2" method="get">
+        <input type="text" name="id"/>
+        <input type="password" name="pw"/>
+        <input type="text" name="name"/>
+        <input type="text" name="email"/>
+        <button type="submit">제출</button>
+    </form>
+
+    <fieldset>
+        <legend>Details</legend>
+        <form action="/post" method="post">
+            <input type="text" name="name"/>
+            <input type="radio" name="gender" value="male" id="male"/><label for="male">남성</label>
+            <input type="radio" name="gender" value="female" id="female"/><label for="female">여성</label>
+            <button type="submit">제출</button>
+        </form>
+    </fieldset>
+</body>
+</html>
