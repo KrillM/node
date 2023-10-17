@@ -8,7 +8,7 @@ app.use(express.json());
 
 // localhost:8000 url 접속에 대한 응답을 위해 만든 코드이다.
 app.get("/", function(req, res){
-    res.render("index");
+    res.render("index1");
 })
 
 app.get("/get", function(req, res){

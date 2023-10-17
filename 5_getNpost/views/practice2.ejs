@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <form action="/post" method="post">
+        <div>
+            아이디 <input type="text" name="id" oninput="validCheckId(this)" 
+            pattern="^([a-z0-9]){5,}$" required/>
+        </div>
+        <div id="error-id"></div>
+        <div>
+            비밀번호 <input type="password" name="password" oninput="validCheckPw(this)" 
+            pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$"
+            required/>
+        </div>
+        <div id="error-pw"></div>
+        <div>
+            이름 <input type="text" name="name" oninput="validCheckName(this)" 
+            pattern="^([가-힇]){2,6}$" required/>
+        </div>
+        <div id="error-irum"></div>
+
+        <fieldset>
+            <legend>성별</legend>
+            <input type="radio" name="gender" value="male" id="male" title="성별을 입력하세요" required/><label for="male">남성</label>
+            <input type="radio" name="gender" value="female" id="female" title="성별을 입력하세요" required/><label for="female">여성</label>
+        </fieldset>
+        <fieldset>
+            <legend>생년월일</legend>
+            <select name="year">
+                <% for(let i=2023; i>=1970; i--){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            년
+            <select name="month">
+                <% for(let i=1; i<=12; i++){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            월
+            <select name="day">
+                <% for(let i=1; i<=31; i++){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            일
+        </fieldset>
+        <fieldset>
+            <legend>전화번호</legend>
+            <input type="number" name="phone1" value="010" readonly/>-
+            <input type="number" name="phone2" oninput="validCheckPn(this)" max="9999" required/>-
+            <input type="number" name="phone3" oninput="validCheckPn(this)" max="9999" required/>
+            <div id="error-pn"></div>
+        </fieldset>
+
+        <br/>
+        <button type="submit">회원가입</button>
+    </form>
+    <script>
+        function validCheckId(el) {
+            const regexPw = /^([a-z0-9]){5,}$/
+            const value = el.value
+            const error = document.getElementById("error-id")
+            if (regexPw.test(value)) {
+                error.innerHTML = ""
+            } 
+            else {
+                error.innerHTML = "소문자와 숫자로 조합된 5자리 이상을 입력하세요."
+            }
+        }
+
+        function validCheckPw(el) {
+            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+            const value = el.value
+            const error = document.getElementById("error-pw")
+            if (regex.test(value)) {
+                error.innerHTML = ""
+            } 
+            else {
+                error.innerHTML = "대소문자, 숫자, 특수문자는 반드시 포함된 채로 8~12자리를 입력하세요."
+            }
+        }
+
+        function validCheckName(el) {
+            const regexPw = /^([가-힇]){2,6}$/
+            const value = el.value
+            const error = document.getElementById("error-irum")
+            if (regexPw.test(value)) {
+                error.innerHTML = ""
+            } 
+            else {
+                error.innerHTML = "이름을 올바르게 입력하세요."
+            }
+        }
+        function validCheckPn(el) {
+            const regexPw = /^([0-9]){,4}$/
+            const value = el.value
+            const error = document.getElementById("error-pn")
+            
+            if (regexPw.test(value)) {
+                error.innerHTML = ""
+            } 
+            else {
+                error.innerHTML = "최대 4자리까지 입력이 가능합니다."
+            }
+        }
+    </script>
+</body>
+</html>

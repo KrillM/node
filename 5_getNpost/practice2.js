@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port=8002;
+const port=8003;
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended:true}));
@@ -8,7 +8,7 @@ app.use(express.json());
 
 // localhost:8000 url 접속에 대한 응답을 위해 만든 코드이다.
 app.get("/", function(req, res){
-    res.render("practice");
+    res.render("practice2");
 })
 
 app.get("/get", function(req, res){
