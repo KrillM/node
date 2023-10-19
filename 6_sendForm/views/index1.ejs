@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- action, get, post 안 적어야 다른 페이지로 이동하지 않는다. -->
+    <img src="https://upload.wikimedia.org/wikipedia/ko/8/8b/AFC_%EC%95%84%EC%95%BD%EC%8A%A4_%EB%A1%9C%EA%B3%A0.svg"/>
+    <form name="register">
+        이름 <input type="text" name="name"/>
+        국적 <input type="text" name="national"/>
+        남성 <input type="radio" name="gender" value="male">
+        여성 <input type="radio" name="gender" value="female">
+        <button type="button" onclick="getAjax()">ajax get 전송</button>
+        <button type="button" onclick="postAjax()">ajax post 전송</button>
+
+        <!-- submit은 전송하는 성질을 가진다 -->
+        <!-- <button type="submit">등록</button> -->
+    </form>
+    <h3 id="result"></h3>
+    <script>
+        function getAjax(){
+            const form=document.forms["register"]
+            const data={
+                name: form.name.value,
+                national: form.national.value,
+                gender: form.gender.value
+            }
+            $.ajax({
+                url:"/ajax",
+                type:"GET",
+                data: "data",
+                success: function(data){ // 성공적으로 응답을 받았을 경우의 handler
+                    console.log(data);
+                    $("#result").html(`ajax get요청 성공 ${national}에서 오신 ${name}님 ${gender}이셨네요.`);
+                }
+            })
+        }
+        function postAjax(){
+            const form=document.forms["register"]
+            const data={
+                name: form.name.value,
+                national: form.national.value,
+                gender: form.gender.value
+            }
+            $.ajax({
+                url:"/ajax",
+                type:"POST",
+                data: "data",
+                success: function(data){ // 성공적으로 응답을 받았을 경우의 handler
+                    console.log(data);
+                    $("#result").html(`ajax post요청 성공 ${national}에서 오신 ${name}님 ${gender}이셨네요.`);
+                }
+            })
+
+        }
+    </script>
+</body>
+</html>
