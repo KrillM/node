@@ -1,6 +1,7 @@
 const data ={
     name: "krille",
     language: ["korean","english","russian"],
+    job: "blogger",
     height: 175
 };
 
