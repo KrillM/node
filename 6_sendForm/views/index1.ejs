@@ -27,15 +27,15 @@
             const data={
                 name: form.name.value,
                 national: form.national.value,
-                gender: form.gender.value
+                gender: form.gender.value,
             }
             $.ajax({
                 url:"/ajax",
                 type:"GET",
-                data: "data",
-                success: function(data){ // 성공적으로 응답을 받았을 경우의 handler
-                    console.log(data);
-                    $("#result").html(`ajax get요청 성공 ${national}에서 오신 ${name}님 ${gender}이셨네요.`);
+                data: data,
+                success: function(result){ // 성공적으로 응답을 받았을 경우의 handler
+                    console.log(result);
+                    $("#result").html(`ajax get요청 성공 ${result.national}에서 오신 ${result.name}님 ${result.gender}이셨네요.`);
                 }
             })
         }
@@ -44,18 +44,17 @@
             const data={
                 name: form.name.value,
                 national: form.national.value,
-                gender: form.gender.value
+                gender: form.gender.value,
             }
             $.ajax({
                 url:"/ajax",
                 type:"POST",
-                data: "data",
-                success: function(data){ // 성공적으로 응답을 받았을 경우의 handler
-                    console.log(data);
-                    $("#result").html(`ajax post요청 성공 ${national}에서 오신 ${name}님 ${gender}이셨네요.`);
+                data: data,
+                success: function(result){ // 성공적으로 응답을 받았을 경우의 handler
+                    console.log(result);
+                    $("#result").html(`ajax post요청 성공 ${result.national}에서 오신 ${result.name}님 ${result.gender}이셨네요.`);
                 }
             })
-
         }
     </script>
 </body>
