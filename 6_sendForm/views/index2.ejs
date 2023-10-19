@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form name="register">
+        이름 <input type="text" name="name" required/>
+        국적 <input type="text" name="national"/>
+        남성 <input type="radio" name="gender" value="남성">
+        여성 <input type="radio" name="gender" value="여성">
+        <button type="button" onclick="getAxios()">axios get 전송</button>
+        <button type="button" onclick="postAxios()">axios post 전송</button>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        function getData(){
+            const form = document.forms["register"];
+
+            if(!form.checkValidity()){ // checkValidity 폼의 유효성 검사통해 boolean값 반환
+                form.reportValidity(); // reportValidity 유효성 검사를 통과하지 못한 input값 빡구
+                $("#result").html("자네는 이름 없는 사나이인가?")
+                return false; // return 뒤에 다른 값이 없거나 false를 적으면 종료된다.
+            }
+
+            const data={
+                name: form.name.value,
+                national: form.national.value,
+                gender: form.gender.value,
+            }
+            return data;
+        }
+        function getAxios(){
+            const data=getData();
+            if(!data)return;
+
+            axios({
+                method: "GET",
+                url: "/axios",
+                params: data
+            }).then((res)=>{                
+                const {
+                    national,
+                    name, 
+                    gender
+                } = res.data
+
+                $("#result").html(`axios get 요청 성공 ${national}에서 오신 ${name}님 환영합니다. ${gender}이시군요.`)
+            })
+        }
+
+        async function postAxios() {
+            const data = getData();
+            if(!data)return;
+
+            const res = await axios({
+                method: "POST",
+                url: "/axios",
+                data: data,
+            })
+            console.log("res", res)
+            console.log("res.data", res.data)
+            $("#result").html(`axios post 요청 성공 ${res.data.name}님 환영합니다.`)
+        }
+    </script>
+</body>
+</html>

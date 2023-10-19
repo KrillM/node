@@ -8,7 +8,7 @@ app.use(express.json());
 
 // localhost:8000 url 접속에 대한 응답을 위해 만든 코드이다.
 app.get("/", function(req, res){
-    res.render("index1.ejs");
+    res.render("index2.ejs");
 })
 
 app.get("/ajax", function(req, res){
@@ -17,6 +17,16 @@ app.get("/ajax", function(req, res){
 })
 
 app.post("/ajax", function(req, res){
+    console.log(req.body);
+    res.send(req.body);
+})
+
+app.get("/axios", function(req, res){
+    console.log(req.query);
+    res.send(req.query);
+})
+
+app.post("/axios", function(req, res){
     console.log(req.body);
     res.send(req.body);
 })
