@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form name="sign-up">
+        이름 <input type="text" name="name" required/>
+        <fieldset>
+            <legend>성별</legend>            
+            남성 <input type="radio" name="gender" value="남성" required>
+            여성 <input type="radio" name="gender" value="여성" required>
+        </fieldset>
+
+        <fieldset>
+            <legend>생년월일</legend>
+            <select name="year">
+                <% for(let i=2023; i>=1970; i--){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            년
+            <select name="month">
+                <% for(let i=1; i<=12; i++){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            월
+            <select name="day">
+                <% for(let i=1; i<=31; i++){ %>
+                    <option value="<%= i %>"> <%= i %> </option> 
+                <% } %>
+            </select>
+            일
+        </fieldset>
+        <fieldset>
+            <legend>관심사</legend>
+            <input type="checkbox" name="hobby1" value="travel">
+            <label for="hobby1">여행</label>
+            <input type="checkbox" name="hobby2" value="fashion">
+            <label for="hobby2">패션</label>
+            <input type="checkbox" name="hobby3" value="food">
+            <label for="hobby3">요리</label>
+        </fieldset>
+        <button type="button" onclick="getAxios()">제출</button>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        function getData(){
+            const form = document.forms["sign-up"];
+
+            if(!form.checkValidity()){ 
+                form.reportValidity(); 
+                $("#result").html("올바르게 입력하세요")
+                return false;
+            }
+
+            const data={
+                name: form.name.value,
+                gender: form.gender.value,
+                year: form.year.value,
+                month: form.month.value,
+                day: form.day.value,
+                hobby1: form.hobby1.value,
+                hobby2: form.hobby2.value,
+                hobby3: form.hobby3.value,
+            }
+            return data;
+        }
+
+        function getAxios(){
+            const data=getData();
+            if(!data)return;
+
+            axios({
+                method: "GET",
+                url: "/axios",
+                params: data
+            }).then((res)=>{                
+                const {
+                    name,
+                    gender,
+                    year,
+                    month,
+                    day,
+                    hobby1,
+                    hobby2,
+                    hobby3,
+                } = res.data
+                $("#result").html(`회원가입 성공!`)
+            })
+        }
+    </script>
+</body>
+</html>
