@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form name="register">
+        이름 <input type="text" name="name" required/>
+        국적 <input type="text" name="national"/>
+        남성 <input type="radio" name="gender" value="male">
+        여성 <input type="radio" name="gender" value="female">
+        <button type="button" onclick="getFetch()">fetch get 전송</button>
+        <button type="button" onclick="postFetch()">fetch post 전송</button>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        function getData(){
+            const form = document.forms["register"];
+
+            if(!form.checkValidity()){ 
+                form.reportValidity(); 
+                $("#result").html("자네는 이름 없는 사나이인가?")
+                return false;
+            }
+
+            const data={
+                name: form.name.value,
+                national: form.national.value,
+                gender: form.gender.value,
+            }
+            return data;
+        }
+
+        function getFetch(){
+            const data=getData();
+            if(!data) return;
+            const urlQuery=new URLSearchParams(data).toString();
+
+            /*
+            fetch(url, option 선택) <- 기본키는 GET
+            get 요청 시 데이터를 쿼리로 만들어서 url과 함께 전송한다.
+            */
+            
+            // 방법 1 then chaining
+            // const urlQuery=`name=${data.name}&national=${data.national}&gender=${data.gender}`;
+            // fetch(`/fetch?${urlQuery}`).then((res)=>{
+            //     console.log(res);
+            //     return res.json();  // 응답을 파싱해야함 Ex. .json(), .text
+            // }).then((res)=>{
+            //     // 위에서 파싱해서 return하고 있기 때문에 이 함수의 res는 서버에서 여러분들이 응답한 객체가 나올 것이다.
+            //     console.log(res);
+            // })
+            // $("#result").html(`fetch get 요청 성공 ${res.national}에서 오신 ${res.name}님 환영합니다. ${res.gender}이시군요.`)
+
+
+            // 방법 2 asyne
+            fetch(`/fetch?${urlQuery}`).then(async (res)=>{
+                console.log(res);
+                console.log(await res.json());
+                return res.json();  // 응답을 파싱해야함 Ex. .json(), .text
+            }).then((res)=>{
+                console.log(res);
+            })
+
+            // 방법 3 (async and await)
+            // const qes = await fetch(`/fetch?${urlQuery}`);
+            // const res = await qes.json();
+            // console.log(res);
+        }
+
+        function postFetch(){
+            const data=getData();
+            if(!data)return;
+
+            // 지금까지 content-type: 기본값을 사용: application/x-www-form-url
+            fetch("/fetch",{
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then(function(res){
+                return res.json();
+            }).then(function(res){
+                console.log(res);
+                $("#result").html(`fetch post 요청 성공 ${res.national}에서 오신 ${res.name}님 환영합니다. ${res.gender}이시군요.`)
+            })
+        }
+    </script>
+</body>
+</html>
