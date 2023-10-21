@@ -12,7 +12,7 @@ const upload=multer({
 // 위의 미들웨어와의 차이점은?
 const uploadDetails=multer({
     storage: multer.diskStorage({
-        destination: function(req, file, done){
+        destination: function(req, file, done){ // 위의 코드처럼 약자 사용 불가
             done(null, "files/");
         },
         filename: function(req, file, done){
@@ -37,8 +37,7 @@ app.get("/", function(req, res){
 
 // file middleware. single() {req.file(), upload only one file}, array(), fields() {req.files(), upload many files}
 // the file, which `name` is `userfile`, save a file by multer's settings and create 'req.file' object and send to next function.
-// multer create name through uuid. (even omit file type)
-// unlike basic set of multer, uploadDetails function make us happy
+// multer create name through uuid. (even omit file type) unlike basic set of multer, uploadDetails function make us happy
 app.post("/upload", uploadDetails.single("userfile"), function(req, res){
     console.log("file: ", req.file); // file uploaded through here
     console.log("body: ", req.body); // rest
