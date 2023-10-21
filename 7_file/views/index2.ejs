@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <h2>파일 업로드</h2>
+    <form action="/uploads1" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile" multiple/><br/>
+        <input type="text" name="title"/>
+        <button type="submit">array</button>
+    </form>
+
+    <h2>파일 업로드</h2>
+    <form action="/uploads2" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile1" multiple/><br/>
+        <input type="text" name="title1"/><br/>
+        <input type="file" name="userfile2" multiple/><br/>
+        <input type="text" name="title2"/><br/>
+        <button type="submit">fields</button>
+    </form>
+</body>
+</html>
