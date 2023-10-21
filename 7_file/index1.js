@@ -34,7 +34,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
 app.get("/", function(req, res){
-    res.render("index1.ejs");
+    res.render("index2.ejs");
 })
 
 // file middleware. single() {req.file(), upload only one file}, array(), fields() {req.files(), upload many files}
@@ -44,7 +44,7 @@ app.post("/upload", uploadDetails.single("userfile"), function(req, res){
     console.log("file: ", req.file); // file uploaded through here
     console.log("body: ", req.body); // rest
     // res.send("file uploaded!");
-    res.render("result.ejs",{
+    res.render("result1.ejs",{
         src: req.file.path,
         title: req.body.title
     });

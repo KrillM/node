@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h2>파일 업로드</h2>
+    <form name="dynamic-upload">
+        <input type="file" name="userfile"/><br/>
+        <input type="text" name="title"/>
+        <button type="button" onclick="dynamicUpload()">업로드</button>
+    </form>
+    <div id="dynamic-upload-result">
+
+    </div>
+
+    <script>
+        function dynamicUpload(){
+            const form =document.forms["dynamic-upload"];
+            const formData=new FormData();
+            formData.append("title",form.title.value);
+            formData.append("userfile",form.userfile.files[0])
+            
+            // console.log("value: ",form.userfile.value); <- 파일은 값으로 못 받아온다.
+            console.log("files: ",form.userfile.files);
+
+            axios({
+                method: "POST",
+                url: "/upload/dynamic",
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/from-data"
+                }
+            }).then((res)=>{
+                console.log(res.data);
+                const result = document.getElementById("dynamic-upload-result");
+                result.innerHTML=`<img src="/${res.data.src}">`
+            })
+        };
+    </script>
+</body>
+</html>

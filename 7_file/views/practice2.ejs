@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+    <style>
+        #dynamic-upload-result .card{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>회원등록</h2>
+    <form name="dynamic-upload">
+        이름 <input type="text" name="name"/><br/>
+        번호 <input type="text" name="number"/><br/>
+        나이 <input type="text" name="age"/><br/>
+        <input type="file" name="userfile"/>
+        <button type="button" onclick="dynamicUpload()">등록</button>
+    </form>
+    <br/>
+    <div id="dynamic-upload-result"></div>
+    <div class="card">
+    </div>
+
+    <script>
+        function dynamicUpload(){
+            const form =document.forms["dynamic-upload"];
+            const formData=new FormData();
+            formData.append("name",form.name.value);
+            formData.append("number",form.number.value);
+            formData.append("age",form.age.value);
+            formData.append("userfile",form.userfile.files[0])
+
+            axios({
+                method: "POST",
+                url: "/upload/dynamic",
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/from-data"
+                }
+            }).then((res)=>{
+                console.log(res.data);
+                const result = document.getElementById("dynamic-upload-result");
+                result.innerHTML=`<img src="/${res.data.src}" style="width:200px; height:300px;">`
+                $(".card").html(`
+                    <h4>${res.data.name}님 환영합니다.</h4>
+                    <p>번호 ${res.data.number}</p>
+                    <p>나이 ${res.data.age}</p>
+                `)
+            })
+        };
+    </script>
+</body>
+</html>
