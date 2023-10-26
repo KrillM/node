@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form name="sign-up">
+        Nickname <input type="text" name="name" required/><br/>
+        Password <input type="password" name="password" required/><br/>
+        <button type="button" onclick="postAxios()">로그인</button><br/>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        function getData(){
+            const form = document.forms["sign-up"];
+
+            if(!form.checkValidity()){ 
+                form.reportValidity(); 
+                $("#result").html(`<p style="color: red">올바르게 입력하세요!</p>`)
+                return false;
+            }
+
+            const data={
+                name: form.name.value,
+                password: form.password.value
+            }
+            return data;
+        }
+
+        async function postAxios() {
+            const data = getData();
+            if(!data)return;
+
+            const res = await axios({
+                method: "POST",
+                url: "/axios",
+                data: data,
+            })
+            console.log("res.data", res.data)
+            if(res.data.success==true){
+                $("#result").html(`<span style="color: blue">${res.data.name}</span>님 환영합니다!`)
+            }
+            else{
+                $("#result").html(`<p style="color: red">너 누구야?</p>`)
+            }
+        }
+    </script>
+</body>
+</html>
