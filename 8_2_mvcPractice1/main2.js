@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const router = require("./routes");
-const port = 5555;
+const router = require("./routes/index2.js");
+const port = 5556;
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));

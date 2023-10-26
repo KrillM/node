@@ -1,7 +1,7 @@
 const {checkAccount} = require("../model/account.js")
 
 exports.main = (req, res)=>{
-    res.render("index.ejs");
+    res.render("index1.ejs");
 };
 
 exports.postAxios = (req, res)=>{
