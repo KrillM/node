@@ -33,3 +33,6 @@ exports.deleteVisitor = (req, res) => {
 }
 
 // 방명록 수정
+exports.updateVisitor = (req, res) => {
+    res.send("");
+}

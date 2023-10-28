@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>방명록</title>
+</head>
+<body>
+    <form name="form-visitor">
+        <fieldset>
+            <legend>회원가입</legend>
+            ID: <input type="text" name="name"/><br/>
+            PW: <input type="text" name="password"/>&nbsp;
+            <button type="button" onclick="addCrew()">가입</button>
+        </fieldset>
+    </form><br/>
+    <div>
+        <table border="1" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>아이디</th>
+                    <th>비밀번호</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<data.length; i++) { %>
+                    <tr>
+                        <td><%= data[i].id %></td>
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].password %></td>
+                        <td><button type="button" onclick="deleteCrew('<%= data[i].id %>', this.parentElement.parentElement)">삭제</button></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <h3 id="message"></h3>
+
+    <script>
+        function addCrew(){
+            const form=document.forms["form-visitor"];
+            const data={
+                name: form.name.value,
+                password: form.password.value,
+            }
+
+            axios({
+                method: 'post',
+                url: '/crew',
+                data: data
+            }).then((res)=>{
+                const {id, name, password} =res.data;
+
+                $("tbody").append(`<tr>
+                    <td>${id}</td>
+                    <td>${name}</td>
+                    <td>${password}</td>
+                    <td><button type="button" onclick="deleteCrew(${id}, this.parentElement.parentElement)">삭제</button></td>
+                </tr>`)
+            })
+        }
+
+        function deleteCrew(id, TrElement){ 
+            axios({
+                method: 'delete',
+                url: `/crew/${id}`, 
+            }).then((res)=>{
+                console.log(res.data);
+                if(res.data.result){
+                    $(TrElement).remove();
+                }
+                else{
+                    $("#message").html(`<p style="color: red">삭제할 수 없습니다.</p>`)
+                }
+            })
+        }
+    </script>
+</body>
+</html>

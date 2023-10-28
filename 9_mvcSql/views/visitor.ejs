@@ -44,21 +44,18 @@
     <h3 id="message"></h3>
 
     <script>
-        function addVisitor(){
-            // 서버에 보낼 데이터 완성
+        function addVisitor(){ // 서버에 보낼 데이터 완성
             const form=document.forms["form-visitor"];
             const data={
                 username: form.username.value,
                 comment: form.comment.value,
             }
 
-            // axios를 이용해 데이터를 서버로 전송
-            axios({
+            axios({ // axios를 이용해 데이터를 서버로 전송
                 method: 'post',
                 url: '/visitor',
                 data: data
-            }).then((res)=>{
-                // 응답 받으면 자동 추가
+            }).then((res)=>{ // 응답 받으면 자동 추가
                 const {id, username, comment} =res.data;
 
                 $("tbody").append(`<tr>
@@ -71,9 +68,7 @@
             })
         }
 
-        function deleteVisitor(id, TrElement){
-            // 삭제할 id가 필요하다.
-
+        function deleteVisitor(id, TrElement){ // 삭제할 id가 필요하다.
             axios({
                 method: 'delete',
                 url: `/visitor/${id}`, // 콜론 붙이지 않는다.

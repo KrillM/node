@@ -12,8 +12,6 @@ router.post("/visitor", ctrl.postVisitor);
 router.delete("/visitor/:id", ctrl.deleteVisitor);
 
 // 방명록 수정
-router.patch("/visitor/:id", function(req, res){
-    res.send("");
-});
+router.patch("/visitor/:id", ctrl.updateVisitor);
 
 module.exports = router; // 모듈 밖으로 라우터를 넘겨주어야 사용이 가능하다.
