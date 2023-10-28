@@ -27,8 +27,8 @@ exports.postVisitor = (req, res) => {
 // 방명록 삭제
 exports.deleteVisitor = (req, res) => {
     console.log(req.params);
-    visitor.deleteVisitor(req.params.id, ()=>{
-        res.send({result: true});
+    visitor.deleteVisitor(req.params.id, (result)=>{
+        res.send({result: result});
     });
 }
 

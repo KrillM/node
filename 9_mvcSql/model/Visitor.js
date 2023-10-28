@@ -37,7 +37,13 @@ exports.deleteVisitor = (id, callback) =>{
         if(err){
             throw err;
         }
+
+        let flag=false;
+        if(result.affectedRows){
+            flag=true;
+        }
+
         console.log('visitor deleted', result);
-        callback();
+        callback(flag);
     })
 }

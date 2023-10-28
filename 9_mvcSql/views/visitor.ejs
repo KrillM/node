@@ -41,6 +41,7 @@
             </tbody>
         </table>
     </div>
+    <h3 id="message"></h3>
 
     <script>
         function addVisitor(){
@@ -78,7 +79,13 @@
                 url: `/visitor/${id}`, // 콜론 붙이지 않는다.
             }).then((res)=>{
                 console.log(res.data);
-                $(TrElement).remove(); // 삭제할 td태그가 필요하다.
+
+                if(res.data.result){
+                    $(TrElement).remove(); // 삭제할 td태그가 필요하다.
+                }
+                else{
+                    $("#message").html(`<p style="color: red">삭제할 수 없습니다.</p>`)
+                }
             })
         }
     </script>
