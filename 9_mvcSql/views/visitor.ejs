@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>방명록</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>방명록</legend>
+            <input type="text" name="username"/>
+            <br/>
+            <input type="text" name="comment"/>
+            <br/>
+            <button type="button" onclick="addVisitor()">등록</button>
+        </fieldset>
+    </form><br/>
+    <div>
+        <table border="1" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>작성자</th>
+                    <th>방명록</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<data.length; i++) { %>
+                    <tr>
+                        <td><%= data[i].id %></td>
+                        <td><%= data[i].username %></td>
+                        <td><%= data[i].comment %></td>
+                        <td><button type="button" onclick="">수정</button></td>
+                        <td><button type="button" onclick="">삭제</button></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
