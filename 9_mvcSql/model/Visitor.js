@@ -30,3 +30,14 @@ exports.insertVisitor = (data, callback)=>{
         callback(result.insertId);
     })
 }
+
+exports.deleteVisitor = (id, callback) =>{
+    const sql=`DELETE FROM visitor WHERE id = ${id}`;
+    connection.query(sql, (err, result)=>{
+        if(err){
+            throw err;
+        }
+        console.log('visitor deleted', result);
+        callback();
+    })
+}

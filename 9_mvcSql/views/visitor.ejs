@@ -33,8 +33,9 @@
                         <td><%= data[i].id %></td>
                         <td><%= data[i].username %></td>
                         <td><%= data[i].comment %></td>
-                        <td><button type="button" onclick="updateVisitor()">수정</button></td>
-                        <td><button type="button" onclick="deleteVisitor()">삭제</button></td>
+                        <!-- 수정, 삭제를 위해서는 id 호출은 필수이다. -->
+                        <td><button type="button" onclick="updateVisitor('<%= data[i].id %>', this.parentElement.parentElement)">수정</button></td>
+                        <td><button type="button" onclick="deleteVisitor('<%= data[i].id %>', this.parentElement.parentElement)">삭제</button></td>
                     </tr>
                 <% } %>
             </tbody>
@@ -55,7 +56,7 @@
                 method: 'post',
                 url: '/visitor',
                 data: data
-            }).then(()=>{
+            }).then((res)=>{
                 // 응답 받으면 자동 추가
                 const {id, username, comment} =res.data;
 
@@ -63,9 +64,21 @@
                     <td>${id}</td>
                     <td>${username}</td>
                     <td>${comment}</td>
-                    <td><button type="button" onclick="updateVisitor()">수정</button></td>
-                    <td><button type="button" onclick="deleteVisitor()">삭제</button></td>
+                    <td><button type="button" onclick="updateVisitor(${id}, this.parentElement.parentElement)">수정</button></td>
+                    <td><button type="button" onclick="deleteVisitor(${id}, this.parentElement.parentElement)">삭제</button></td>
                 </tr>`)
+            })
+        }
+
+        function deleteVisitor(id, TrElement){
+            // 삭제할 id가 필요하다.
+
+            axios({
+                method: 'delete',
+                url: `/visitor/${id}`, // 콜론 붙이지 않는다.
+            }).then((res)=>{
+                console.log(res.data);
+                $(TrElement).remove(); // 삭제할 td태그가 필요하다.
             })
         }
     </script>
