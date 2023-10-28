@@ -18,3 +18,15 @@ exports.getVisitors=(callback)=>{
         callback(rows);
     })
 }
+
+// 콜백은 늘 나중에 받아야 한다.
+exports.insertVisitor = (data, callback)=>{
+    const sql=`INSERT INTO visitor VALUES (null, '${data.username}', '${data.comment}')`;
+    connection.query(sql, (err, result)=>{
+        if(err){
+            throw err;
+        }
+        console.log('visitor insert',result);
+        callback(result.insertId);
+    })
+}

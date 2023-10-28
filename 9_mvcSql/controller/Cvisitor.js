@@ -12,3 +12,18 @@ exports.visitor = (req, res) => {
         res.render("visitor", {data: rows});
     })
 }
+
+// 방명록 등록
+exports.postVisitor = (req, res) => {
+    console.log("req.body", req.body);
+    visitor.insertVisitor(req.body, (id)=>{
+        console.log("controller postVisitor", id);
+        res.send({
+            ...req.body, id
+        });
+    });
+}
+
+// 방명록 수정
+
+// 방명록 삭제
