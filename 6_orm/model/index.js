@@ -16,6 +16,7 @@ db.Sequelize = Sequelize;
 // const Visitor = require("./Visitor")
 // db.Visitor = Visitor.(sequelize, Sequelize); 두 코드를 합친 게 밑의 코드다.
 db.Visitor = require("./Visitor")(sequelize, Sequelize);
+//db.Visitor 키를 만든다.
 //db.Visitor에는 sequelize로 Visitor 테이블을 정의한 객체를 담는다.
 
 module.exports = db;
