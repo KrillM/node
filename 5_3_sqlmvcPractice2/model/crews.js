@@ -18,7 +18,7 @@ exports.signUpProcess = (data, callback) => {
 }
 
 exports.loginProcess = (data, callback) => {
-    const sql = `SELECT * FROM crews WHERE nickname='${data.name}' and password='${data.password}' limit 1;`
+    const sql = `SELECT * FROM crews WHERE nickname='${data.nickname}' and password='${data.password}' limit 1;`
     connection.query(sql, function (err, rows){
         if(err){
             throw err;
@@ -37,9 +37,9 @@ exports.getCrew = (id, callback) => {
     })
 }
 
-exports.updateProfileProcess = (data, callback) => {
+exports.updateProfileProcess = (data, id, callback) => {
     const sql = `UPDATE crews SET nickname='${data.nickname}', password='${data.password}', 
-                name='${data.name}', introduction='${data.introduction}' WHERE id='${data.id}'; `
+                name='${data.name}', introduction='${data.introduction}' WHERE id='${id}'; `
     connection.query(sql, (err) => {
         if(err){
             throw err;

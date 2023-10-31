@@ -39,11 +39,7 @@ exports.profilePage = function(req, res){
 }
 
 exports.profileUpdateProcess = function(req, res){
-    const data={
-        ...req.body,
-        id: req.params.id,
-    }
-    crews.updateProfileProcess(data, function(){
+    crews.updateProfileProcess(req.body, req.params.id, function(){
         res.send({result:true});
     })
 }

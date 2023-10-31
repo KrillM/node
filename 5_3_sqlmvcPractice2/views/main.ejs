@@ -10,7 +10,7 @@
 <body>
     <h2>로그인 with MySQL</h2>
     <form name="login-process">
-        Nickname <input type="text" name="name" required/><br/>
+        Nickname <input type="text" name="nickname" required/><br/>
         Password <input type="password" name="password" required/>
         <button type="button" onclick="loginProcess()">로그인</button>
     </form>
@@ -30,7 +30,7 @@
             };
 
             const data = {
-                name: form.name.value,
+                nickname: form.nickname.value,
                 password: form.password.value
             };
 
