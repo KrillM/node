@@ -49,7 +49,7 @@ exports.profilePage = function(req, res){
             id: req.body.id,
         }
     }).then(function(result){
-        console.log("결과, ", result);
+        console.log("조회 ", result);
         if(result != null){
             res.render('profile', {data: result})
         }
@@ -75,7 +75,7 @@ exports.profileUpdateProcess = function(req, res){
             id: req.params.id
         }
     }).then(function(result){
-        console.log("결과, ", result);
+        console.log("수정 ", result);
         res.send({result: true});
     }).catch(function(err){
         console.log(err);
@@ -84,5 +84,15 @@ exports.profileUpdateProcess = function(req, res){
 }
 
 exports.profileDelete = function(req, res){
-
+    Visitor.destroy({
+        where:{
+            id: req.params.id
+        }
+    }).then(function(result){
+        console.log("삭제 ",result);
+        res.send({result:true})
+    }).catch(function(err){
+        console.log(err);
+        res.status(400).send();
+    })
 }
