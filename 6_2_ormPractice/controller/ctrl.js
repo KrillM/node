@@ -43,6 +43,7 @@ exports.loginProcess = function(req, res){
 }
 
 exports.profilePage = function(req, res){
+    console.log("아이디 ",req.body.id);
     Visitor.findOne({
         where: {
             id: req.body.id,
@@ -62,7 +63,24 @@ exports.profilePage = function(req, res){
 }
 
 exports.profileUpdateProcess = function(req, res){
-
+    const data={
+        nickname: req.body.nickname,
+        password: req.body.password,
+        name: req.body.name,
+        introduction: req.body.introduction
+    }
+    Visitor.update(data, {
+        where: {
+            // 어떨때는 body를 어떨때는 param을 인식하는데 그 기준이 무엇인지?
+            id: req.params.id
+        }
+    }).then(function(result){
+        console.log("결과, ", result);
+        res.send({result: true});
+    }).catch(function(err){
+        console.log(err);
+        res.status(400).send();
+    })
 }
 
 exports.profileDelete = function(req, res){
