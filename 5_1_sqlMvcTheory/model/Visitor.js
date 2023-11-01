@@ -47,3 +47,22 @@ exports.deleteVisitor = (id, callback) =>{
         callback(flag);
     })
 }
+
+exports.getVisitorById = (id, callback)=>{
+    connection.query(`SELECT * FROM visitor WHERE id=${id}`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        callback(rows[0]);
+    })
+}
+
+exports.updateVisitor = (data, callback) =>{
+    const sql = `UPDATE visitor SET username='${data.username}', comment='${data.comment}' WHERE id=${data.id}`;
+    connection.query(sql, (err, result)=>{
+        if(err){
+            throw err;
+        }
+        callback(result);
+    })
+}

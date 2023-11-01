@@ -9,7 +9,7 @@
   </head>
   <body>
     <form name="form-visitor">
-      <fieldset>
+      <fieldset id="chogihwa">
         <legend>방명록 등록</legend>
         이름 <input type="text" name="username"/><br />
         내용 <input type="text" name="comment"/><br />
@@ -65,6 +65,15 @@
             username,
             comment
           } = res.data
+
+          $("#chogihwa").html(`
+            <legend>방명록</legend>
+            이름 <input type="text" name="username" value=""/><br/>
+            내용 <input type="text" name="comment" value=""/>&nbsp;
+            <div class="btn-group">
+                <button type="button" onclick="addVisitor()">등록</button>
+            </div>
+          `)
 
           $("tbody").append(`<tr id="tr_${id}">
             <td>${id}</td>

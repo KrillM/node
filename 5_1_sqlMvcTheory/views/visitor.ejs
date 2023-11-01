@@ -9,11 +9,13 @@
 </head>
 <body>
     <form name="form-visitor">
-        <fieldset>
+        <fieldset id="chogihwa">
             <legend>방명록</legend>
             이름 <input type="text" name="username"/><br/>
             내용 <input type="text" name="comment"/>&nbsp;
-            <button type="button" onclick="addVisitor()">등록</button>
+            <div class="btn-group">
+                <button type="button" onclick="addVisitor()">등록</button>
+            </div>
         </fieldset>
     </form><br/>
     <div>
@@ -58,6 +60,15 @@
             }).then((res)=>{ // 응답 받으면 자동 추가
                 const {id, username, comment} =res.data;
 
+                $("#chogihwa").html(`
+                <legend>방명록</legend>
+                이름 <input type="text" name="username" value=""/><br/>
+                내용 <input type="text" name="comment" value=""/>&nbsp;
+                <div class="btn-group">
+                    <button type="button" onclick="addVisitor()">등록</button>
+                </div>
+                `)
+
                 $("tbody").append(`<tr>
                     <td>${id}</td>
                     <td>${username}</td>
@@ -81,6 +92,59 @@
                 else{
                     $("#message").html(`<p style="color: red">삭제할 수 없습니다.</p>`)
                 }
+            })
+        }
+
+        function updateVisitor(id){
+            axios({
+                method: 'get',
+                url: `/visitor/${id}`
+            }).then(function(res){
+                const{
+                    username,
+                    comment
+                } = res.data
+
+                const form = document.forms['form-visitor'];
+                form.username.value=username;
+                form.comment.value=comment;
+
+                // 변경, 취소 버튼 생성
+                $(".btn-group").html(`
+                    <button type="button" onclick="editProcess(${id})">변경</button>
+                    <button type="button" onclick="editCancel()">취소</button>
+                `)
+            });
+        }
+
+        function editCancel(){
+            // 1. input 초기화
+            const form = document.forms['form-visitor'];
+            form.username.value='';
+            form.comment.value='';
+
+            // 2. 등록 버튼으로 돌아오기
+            $(".btn-group").html(`<button type="button" onclick="addVisitor()">등록</button>`);
+        }
+
+        function editProcess(id){
+            const form = document.forms['form-visitor'];
+
+            axios({
+                method: 'patch',
+                url: '/visitor',
+                data: {
+                    id: id,
+                    username: form.username.value,
+                    comment: form.comment.value 
+                }
+            }).then((res)=>{
+                return res.data;
+            }).then((data)=>{
+                console.log($(`#tr_${id}`).children('td'));
+                $(`#tr_${id}`).children("td:eq(1)").text(form.username.value);
+                $(`#tr_${id}`).children("td:eq(2)").text(form.comment.value);
+                editCancel(); // 입력창 초기화
             })
         }
     </script>

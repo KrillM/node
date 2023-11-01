@@ -11,7 +11,10 @@ router.post("/visitor", ctrl.postVisitor);
 // 방명록 삭제
 router.delete("/visitor/:id", ctrl.deleteVisitor);
 
+// 선택한 방명록 조회
+router.get("/visitor/:id", ctrl.getVisitorById)
+
 // 방명록 수정
-router.patch("/visitor/:id", ctrl.updateVisitor);
+router.patch("/visitor", ctrl.updateVisitor);
 
 module.exports = router; // 모듈 밖으로 라우터를 넘겨주어야 사용이 가능하다.

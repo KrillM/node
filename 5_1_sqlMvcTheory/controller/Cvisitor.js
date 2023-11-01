@@ -32,7 +32,16 @@ exports.deleteVisitor = (req, res) => {
     });
 }
 
+// 선택한 방명록 조회
+exports.getVisitorById = (req, res) => {
+    visitor.getVisitorById(req.params.id, (result)=>{
+        res.send(result);
+    })
+}
+
 // 방명록 수정
 exports.updateVisitor = (req, res) => {
-    res.send("");
+    visitor.updateVisitor(req.body, (result)=>{
+        res.send({result: true});
+    })
 }
