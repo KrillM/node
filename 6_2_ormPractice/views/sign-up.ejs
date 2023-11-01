@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>회원가입</title>
+</head>
+<body>
+    <h2>회원가입 페이지</h2>
+    <form name="sign-up-form">
+        <fieldset>
+            <legend>회원가입</legend>
+            Nickname: <input type="text" name="nickname" required/><br/>
+            Password: <input type="text" name="password" required/><br/>
+            Name: <input type="text" name="name" required/><br/>
+            자기소개: <input type="text" name="introduction" required/>&nbsp;
+            <button type="button" onclick="addCrew()">가입</button>
+        </fieldset>
+    </form><br/>
+    <h3 id="message"></h3>
+
+    <script>
+        function addCrew(){
+            const form = document.forms["sign-up-form"];
+            if(!form.checkValidity()){
+                form.reportValidity();
+                $("#message").html(`<p style="color: red">올바르게 입력하세요.</p>`);
+                return false;
+            };
+
+            const data = {
+                nickname: form.nickname.value,
+                password: form.password.value,
+                name: form.name.value,
+                introduction: form.introduction.value
+            };
+
+            axios({
+                method: 'post',
+                url: '/sign-up',
+                data: data
+            }).then((res)=>{
+                alert("회원가입 성공!");
+                document.location.href="/";
+            })
+        }
+    </script>
+</body>
+</html>
