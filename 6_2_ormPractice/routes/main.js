@@ -14,7 +14,7 @@ router.post("/login", ctrl.loginProcess);
 
 // 프로필 화면
 router.post("/profile", ctrl.profilePage);
-router.patch("/profile/update/:id", ctrl.profileUpdateProcess);
+router.patch("/profile/update", ctrl.profileUpdateProcess);
 router.delete("/profile/delete/:id", ctrl.profileDelete);
 
 module.exports=router;

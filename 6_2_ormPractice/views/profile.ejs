@@ -30,6 +30,7 @@
             };
 
             const data = {
+                id: form.id.value,
                 nickname: form.nickname.value,
                 password: form.password.value,
                 name: form.name.value,
@@ -38,7 +39,7 @@
 
             axios({
                 method: 'patch',
-                url: `/profile/update/${form.id.value}`,
+                url: `/profile/update`,
                 data: data
             }).then((res)=>{
                 if(res.data.result){

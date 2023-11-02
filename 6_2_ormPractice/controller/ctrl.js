@@ -72,7 +72,7 @@ exports.profileUpdateProcess = function(req, res){
     Visitor.update(data, {
         where: {
             // 어떨때는 body를 어떨때는 param을 인식하는데 그 기준이 무엇인지?
-            id: req.params.id
+            id: req.body.id
         }
     }).then(function(result){
         console.log("수정 ", result);
