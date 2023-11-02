@@ -27,8 +27,7 @@ function Visitor(Sequelize, DataTypes){
       timestamps: false
       // 기본값 중 하나가 데이터의 등록, 변경할 때 시간을 자동으로 저장한다. 
       // 등록시간을 지정하지 않은 테이블일 경우 insert error 발생한다.
-    } 
+    },
   );
 }
-
 module.exports=Visitor;

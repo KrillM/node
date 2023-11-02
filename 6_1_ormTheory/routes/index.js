@@ -19,4 +19,14 @@ router.get("/visitor/:id", controller.getVisitorById);
 // 방명록 삭제
 router.delete("/visitor/:id", controller.deleteVisitor);
 
+router.get("/sign-up", controller.signUpPage);
+router.post("/sign-up", controller.signUpProcess);
+
+router.get("/login", controller.homePage);
+router.post("/login", controller.loginProcess);
+
+router.post("/profile", controller.profilePage);
+router.patch("/profile/update/:id", controller.profileUpdateProcess);
+router.delete("/profile/delete/:id", controller.profileDelete);
+
 module.exports = router;
