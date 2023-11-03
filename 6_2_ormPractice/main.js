@@ -6,6 +6,7 @@ const port = 8000;
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/static", express.static(__dirname + "/static"));
 
 app.use("/", router);
 app.get("*", function(req, res){
