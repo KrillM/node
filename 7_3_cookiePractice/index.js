@@ -1,5 +1,6 @@
 const cookieRun = require("cookie-parser");
 const express = require("express");
+const router = require("./routes");
 const app = express();
 const port = 8000;
 
@@ -7,19 +8,11 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieRun());
+app.use("/", router);
 
-const cookieConfig = {
-    // httpOnly: true, 
-    maxAge: 100000,
-};
-
-app.get("/", function(req, res){
-    res.render("index");
-});
-
-app.get("/setCookie", (req, res)=>{
-    res.cookie("key1", "value1", cookieConfig);
-    res.send(req.cookies)
+app.use("/", router);
+app.get("*", function(req, res){
+    res.send("이게 무슨 주소고? 개 킹받누!");
 });
 
 app.listen(port, function () {
