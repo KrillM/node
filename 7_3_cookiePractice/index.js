@@ -10,7 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieRun());
 app.use("/", router);
 
-app.use("/", router);
 app.get("*", function(req, res){
     res.send("이게 무슨 주소고? 개 킹받누!");
 });
