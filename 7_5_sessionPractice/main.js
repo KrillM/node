@@ -1,5 +1,6 @@
 const session = require('express-session')
 const express = require('express')
+const router = require("./routes")
 const app = express()
 const port = 8000
 
@@ -10,36 +11,10 @@ app.use(session({
     saveUninitialized: true,
 }))
 
-app.get('/', function(req, res){
-    const user=req.session.user;
+app.use("/", router);
 
-    if(user){
-        res.render("main", {isLogin: true, user: user})
-    }
-    else {
-        res.render("main", {isLogin: false})
-    }
-})
-
-app.get('/login', function(req, res){
-    req.session.user='krille';
-    res.send(`
-        <script>
-            alert('로그인 성공');
-            location.href='/';
-        </script>
-    `)
-})
-
-app.get('/logout', function(req, res){
-    req.session.destroy(function(err){
-        res.send(`
-        <script>
-            alert('로그아웃 성공');
-            location.href='/';
-        </script>
-        `)
-    })
+app.get("*", function(req, res){
+    res.send("이게 무슨 주소고? 개 킹받누!");
 })
 
 app.listen(port, function(){
