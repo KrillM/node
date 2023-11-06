@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>메인페이지</title>
+</head>
+<body>
+    <h2>로그인 with MySQL</h2>
+    <form name="my-profile">
+        <input type="hidden" name="id" value="<%=data.id%>" disabled/>
+        Nickname: <input type="text" name="nickname" value="<%=data.nickname%>" readonly/><br/>
+        Password: <input type="text" name="password" value="<%=data.password%>" required/><br/>
+        Name: <input type="text" name="name" value="<%=data.name%>" required/><br/>
+        자기소개: <input type="text" name="introduction" value="<%=data.introduction%>" required/><br/>
+        <button type="button" onclick="updateProcess()">수정</button>
+        <button type="button" onclick="deleteProcess()">삭제</button>
+        <button type="button" onclick="logoutProcess()">로그아웃</button>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        function updateProcess(){
+            const form = document.forms["my-profile"];
+            if(!form.checkValidity()){
+                form.reportValidity();
+                $("#result").html(`<p style="color: red">올바르게 입력하세요!</p>`)
+                return false;
+            };
+
+            const data = {
+                nickname: form.nickname.value,
+                password: form.password.value,
+                name: form.name.value,
+                introduction: form.introduction.value
+            };
+
+            axios({
+                method: 'patch',
+                url: `/crew/profile/update/${form.id.value}`,
+                data: data
+            }).then((res)=>{
+                if(res.data.result){
+                    alert("회원 정보를 수정하였습니다.");
+                }
+                else{
+                    $("#result").html(`<div>회원 정보를 수정할 수 없습니다.</div>`);
+                }
+            }).catch((err)=>{
+                $("#result").html(`<div>회원 정보를 수정할 수 없습니다.</div>`);
+            })
+        }
+
+        function deleteProcess(){
+            const form = document.forms["my-profile"];
+            if(!form.checkValidity()){
+                form.reportValidity();
+                return false;
+            };
+
+            axios({
+                method: 'delete',
+                url: `/crew/profile/delete/${form.id.value}`
+            }).then((res)=>{
+                if(res.data.result){
+                    alert("더 이상 회원이 아닙니다.");
+                    document.location.href = "/crew/login";
+                }
+                else{
+                    $("#result").html(`<div>회원 탈퇴가 불가능합니다.</div>`);
+                }
+            }).catch((err)=>{
+                $("#result").html(`<div>회원 탈퇴가 불가능합니다.</div>`);
+            })
+        }
+
+        function logoutProcess(){
+            axios({
+                method: 'delete',
+                url: `/crew/logout`,
+            }).then(function(res){
+                if(res.data.result){
+                    alert('로그아웃 성공!');
+                    document.location.href = "/crew/login";
+                }
+                else{
+                    $("#result").html(`<div>로그아웃을 할 수 없습니다.</div>`);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>메인페이지</title>
+</head>
+<body>
+    <h2>로그인 with MySQL</h2>
+    <form name="login-process">
+        Nickname <input type="text" name="nickname" required/><br/>
+        Password <input type="password" name="password" required/>
+        <button type="button" onclick="loginProcess()">로그인</button>
+    </form>
+    <form name="form-info" action="/crew/profile" method="post">
+        <input type="hidden" name="id">
+    </form>
+    <a href="/crew/sign-up">회원가입</a>
+    <h3 id="result"></h3>
+
+    <script>
+        function loginProcess(){
+            const form = document.forms["login-process"];
+            if(!form.checkValidity()){
+                form.reportValidity();
+                $("#result").html(`<p style="color: red">올바르게 입력하세요!</p>`)
+                return false;
+            };
+
+            const data = {
+                nickname: form.nickname.value,
+                password: form.password.value
+            };
+
+            axios({
+                method: 'post',
+                url: '/crew/login',
+                data: data
+            }).then((res)=>{
+                if(res.data.result == true){
+                    alert("로그인 성공!");
+                    const formInfo=document.forms["form-info"];
+                    formInfo.id.value=res.data.id;
+                    formInfo.submit();
+                }
+                else{
+                    $("#result").html(`<p style="color: red">너 누구야?</p>`)
+                }
+            })
+        }
+    </script>
+</body>
+</html>
